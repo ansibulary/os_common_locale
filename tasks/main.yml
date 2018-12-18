@@ -1,0 +1,18 @@
+---
+- name: Locale configured
+  lineinfile:
+    path: /etc/locale.gen
+    line: "{{ site.locale }} \\1"
+    regexp: "^#?{{ site.locale }} (.*)"
+    backrefs: true
+  register: common_locale
+
+- name: Locale generated
+  command: locale-gen
+  when: common_locale is changed
+
+- name: Language set in locale.conf
+  lineinfile:
+    path: /etc/locale.conf
+    line: LANG="{{ site.locale }}"
+    create: true
