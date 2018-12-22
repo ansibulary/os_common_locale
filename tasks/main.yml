@@ -9,6 +9,8 @@
 
 - name: Locale generated
   command: locale-gen
+  environment:
+    PATH: /mnt/usr/bin:$PATH
   when: common_locale is changed
 
 - name: Language set in locale.conf
